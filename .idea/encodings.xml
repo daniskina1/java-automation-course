@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/addressbook-web-test/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/addressbook-web-test/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/addressbook-web-tests/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/addressbook-web-tests/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/addressboor-web-tests/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/addressboor-web-tests/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sunbox/src/main/java" charset="UTF-8" />

@@ -10,10 +10,6 @@
     <artifactId>maven</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <modules>
-        <module>sunbox</module>
-        <module>addressbook-web-tests</module>
-    </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -25,11 +21,22 @@
         <testng.version>7.11.0</testng.version>
         <allure.version>2.29.1</allure.version>
         <restassured.version>5.5.5</restassured.version>
+        <junit-platform-launcher.version>1.9.3</junit-platform-launcher.version>
+        <slf4j-simple.version>2.0.12</slf4j-simple.version>
         <maven.surefire.plugin.version>3.5.3</maven.surefire.plugin.version>
         <allure.maven.plugin.version>2.12.0</allure.maven.plugin.version>
+        <selenium.verion>4.35.0</selenium.verion>
+
     </properties>
 
     <dependencies>
+        <!--  Selenium  -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.verion}</version>
+        </dependency>
+
         <!-- RestAssured -->
         <dependency>
             <groupId>io.rest-assured</groupId>
@@ -62,6 +69,22 @@
             <scope>test</scope>
         </dependency>
 
+        <!--  JUnit Platform Launcher  -->
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
+            <version>${junit-platform-launcher.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--  Slf4j-simple  -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j-simple.version}</version>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-testng</artifactId>
@@ -78,10 +101,10 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven.surefire.plugin.version}</version>
                 <configuration>
-                <providers>
+                    <providers>
                         <provider>junit-platform</provider>  <!-- Для JUnit 5 -->
                         <provider>testng</provider>          <!-- Для TestNG -->
-                </providers>
+                    </providers>
                 </configuration>
             </plugin>
 
