@@ -1,47 +1,27 @@
 package addressbook;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-public class ContactDeletionTests {
-    private WebDriver wd;
-    JavascriptExecutor js;
+public class ContactDeletionTests extends TestBase{
     private boolean acceptNextAlert = true;
 
-    @BeforeEach
-    public void setUp() throws Exception {
-        wd = new ChromeDriver();
-        js = (JavascriptExecutor) wd;
-    }
 
     @Test
     public void testContactDeletion() throws Exception {
-        wd.get("http://localhost/addressbook/");
-        wd.findElement(By.name("user")).click();
-        wd.findElement(By.name("user")).clear();
-        wd.findElement(By.name("user")).sendKeys("admin");
-        wd.findElement(By.name("pass")).click();
-        wd.findElement(By.name("pass")).clear();
-        wd.findElement(By.name("pass")).sendKeys("secret");
-        wd.findElement(By.xpath("//input[@value='Login']")).click();
         acceptNextAlert = true;
-        wd.findElement(By.id("5")).click();
+        wd.findElement(By.id("6")).click();
         wd.findElement(By.xpath("//input[@value='Delete']")).click();
         assertTrue(closeAlertAndGetItsText().matches("^Delete 1 addresses[\\s\\S]$"));
     }
 
-    @AfterEach
-    public void tearDown() throws Exception {
-        wd.quit();
-    }
-
-    private boolean isElementPresent(By by) {
+    public boolean isElementPresent(By by) {
         try {
             wd.findElement(by);
             return true;
@@ -50,7 +30,7 @@ public class ContactDeletionTests {
         }
     }
 
-    private boolean isAlertPresent() {
+    public boolean isAlertPresent() {
         try {
             wd.switchTo().alert();
             return true;
@@ -59,7 +39,7 @@ public class ContactDeletionTests {
         }
     }
 
-    private String closeAlertAndGetItsText() {
+    public String closeAlertAndGetItsText() {
         try {
             Alert alert = wd.switchTo().alert();
             String alertText = alert.getText();
