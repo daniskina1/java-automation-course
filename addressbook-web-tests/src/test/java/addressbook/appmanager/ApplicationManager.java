@@ -1,18 +1,17 @@
-package addressbook;
+package addressbook.appmanager;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import addressbook.model.ContactDate;
+import addressbook.model.GroupDate;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.time.Duration;
 
-public class TestBase {
-    JavascriptExecutor js;
+public class ApplicationManager {
     public WebDriver wd;
+    JavascriptExecutor js;
 
-    @BeforeEach
-    public void setUp()  {
+    public void init() {
         wd = new ChromeDriver();
         wd.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
         js = (JavascriptExecutor) wd;
@@ -30,15 +29,15 @@ public class TestBase {
         wd.findElement(By.xpath("//input[@value='Login']")).click();
     }
 
-    protected void returnToGroupPage() {
+    public void returnToGroupPage() {
         wd.findElement(By.linkText("group page")).click();
     }
 
-    protected void submitGroupCreation() {
+    public void submitGroupCreation() {
         wd.findElement(By.name("submit")).click();
     }
 
-    protected void fillGroupForm(GroupDate groupDate) {
+    public void fillGroupForm(GroupDate groupDate) {
         wd.findElement(By.name("group_name")).click();
         wd.findElement(By.name("group_name")).clear();
         wd.findElement(By.name("group_name")).sendKeys(groupDate.name());
@@ -50,43 +49,23 @@ public class TestBase {
         wd.findElement(By.name("group_footer")).sendKeys(groupDate.footer());
     }
 
-    protected void initGroupCreation() {
+    public void initGroupCreation() {
         wd.findElement(By.name("new")).click();
     }
 
-    protected void gotoGroupPage() {
+    public void gotoGroupPage() {
         wd.findElement(By.linkText("groups")).click();
     }
 
-    @AfterEach
-    public void tearDown()  {
-        wd.findElement(By.linkText("Logout")).click();
+    public void stop() {
         wd.quit();
     }
 
-    private boolean isElementPresent(By by) {
-        try {
-            wd.findElement(by);
-            return true;
-        } catch (NoSuchElementException e) {
-            return false;
-        }
-    }
-
-    private boolean isAlertPresent() {
-        try {
-            wd.switchTo().alert();
-            return true;
-        } catch (NoAlertPresentException e) {
-            return false;
-        }
-    }
-
-    protected void deleteSelectGroup() {
+    public void deleteSelectGroup() {
         wd.findElement(By.name("delete")).click();
     }
 
-    protected void selectGroup() {
+    public void selectGroup() {
         wd.findElement(By.name("selected[]")).click();
     }
 
