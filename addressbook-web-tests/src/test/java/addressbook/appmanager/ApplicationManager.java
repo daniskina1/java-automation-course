@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.time.Duration;
 
 public class ApplicationManager {
+    public boolean acceptNextAlert = true;
     public WebDriver wd;
     private SessionHelper sessionHelper;
     private NavigationHelper navigationHelper ;
@@ -62,5 +63,18 @@ public class ApplicationManager {
 
     public NavigationHelper getNavigationHelper() {
         return navigationHelper;
+    }
+
+    public void acceptAlert() {
+        wd.switchTo().alert().accept();
+    }
+
+    public void deleteSelectedContact() {
+        wd.findElement(By.xpath("//input[@value='Delete']")).click();
+    }
+
+    public void selectContact() {
+        acceptNextAlert = true;
+        wd.findElement(By.id("16")).click();
     }
 }
