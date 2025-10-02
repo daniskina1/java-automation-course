@@ -5,7 +5,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import java.time.Duration;
 
-public class ApplicationManager {
+public class ApplicationManager extends ContactHelper {
     public boolean acceptNextAlert = true;
     public WebDriver wd;
     private SessionHelper sessionHelper;
