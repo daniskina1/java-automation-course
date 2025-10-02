@@ -10,12 +10,24 @@ public class ContactDeletionTests extends TestBase {
 
     @Test
     public void testContactDeletion() throws Exception {
-        acceptNextAlert = true;
-        app.getGroupHelper().wd.findElement(By.id("14")).click();
-        app.getGroupHelper().wd.findElement(By.xpath("//input[@value='Delete']")).click();
+        selectContact();
+        deleteSelectedContact();
+        acceptAlert();
+    }
+
+    public void acceptAlert() {
         app.getGroupHelper().wd.switchTo().alert().accept();
     }
 
-
+    public void deleteSelectedContact() {
+        app.getGroupHelper().wd.findElement(By.xpath("//input[@value='Delete']")).click();
     }
+
+    public void selectContact() {
+        acceptNextAlert = true;
+        app.getGroupHelper().wd.findElement(By.id("14")).click();
+    }
+
+
+}
 

@@ -7,11 +7,11 @@ import java.time.Duration;
 
 public class ApplicationManager {
     public WebDriver wd;
-
-    public SessionHelper sessionHelper;
-    public NavigationHelper navigationHelper ;
-    public GroupHelper groupHelper;
+    private SessionHelper sessionHelper;
+    private NavigationHelper navigationHelper ;
+    private GroupHelper groupHelper;
     JavascriptExecutor js;
+
 
     public void init() {
         wd = new ChromeDriver();
