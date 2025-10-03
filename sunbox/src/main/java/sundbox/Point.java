@@ -1,4 +1,4 @@
-package Aniskina_Daria;
+package sundbox;
 
 public class Point {
     public double x;

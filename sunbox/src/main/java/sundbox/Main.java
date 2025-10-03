@@ -1,4 +1,4 @@
-package Aniskina_Daria;
+package sundbox;
 public class Main {
     public static void main(String[] args) {
         int x =0;

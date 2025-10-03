@@ -1,4 +1,4 @@
-import Aniskina_Daria.Point;
+import sundbox.Point;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
