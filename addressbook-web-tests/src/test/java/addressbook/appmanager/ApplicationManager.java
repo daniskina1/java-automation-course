@@ -23,11 +23,11 @@ public class ApplicationManager {
     }
 
     public void init() {
-        if (browser == Browser.CHROME.browserName()){
+        if (browser.equals(Browser.CHROME.browserName())){
             wd = new ChromeDriver();
-        } else if (browser == Browser.FIREFOX.browserName()) {
+        } else if (browser.equals(Browser.FIREFOX.browserName())) {
             wd = new FirefoxDriver();
-        } else if (browser == Browser.IE.browserName()) {
+        } else if (browser.equals(Browser.IE.browserName())) {
             wd = new InternetExplorerDriver();
         }
         wd.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
