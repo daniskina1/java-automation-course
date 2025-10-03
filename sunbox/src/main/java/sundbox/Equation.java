@@ -4,7 +4,7 @@ public class Equation {
     private final double a;
     private final double b;
     private final double c;
-    private int n = 0; // явная инициализация
+    private int n = 0;
 
     public Equation(double a, double b, double c) {
         this.a = a;
@@ -13,16 +13,26 @@ public class Equation {
 
         double d = b * b - 4 * a * c;
 
-        if (d > 0) {
-            n = 2;
-        } else if (d == 0) {
+        if (a != 0) {
+            if (d > 0) {
+                n = 2;
+            } else if (d == 0) {
+                n = 1;
+            } else {
+                n = 0;
+            }
+
+        } else if (b != 0) {
             n = 1;
+
+        } else if (c == 0) {
+            n = -1;
+
         } else {
             n = 0;
         }
     }
-
-    public int rootNumber() {
+    public int rootNumber () {
         return n;
     }
 }
