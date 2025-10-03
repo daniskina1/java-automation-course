@@ -22,7 +22,6 @@ public class ApplicationManager {
         this.browser = browser;
     }
 
-
     public void init() {
         if (browser == Browser.CHROME.browserName()){
             wd = new ChromeDriver();
