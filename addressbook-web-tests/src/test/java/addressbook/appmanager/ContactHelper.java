@@ -3,6 +3,8 @@ package addressbook.appmanager;
 import addressbook.model.ContactDate;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 
 public class ContactHelper extends HelperBase {
     public boolean acceptNextAlert = true;
@@ -20,11 +22,17 @@ public class ContactHelper extends HelperBase {
         wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
     }
 
-    public void fillContactForm(ContactDate contactDate) {
-        type(By.name("firstname"),contactDate.firstname());
-        type(By.name("middlename"),contactDate.middlename());
-        type(By.name("mobile"),contactDate.mobile());
-        type(By.name("email"),contactDate.email());
+    public void fillContactForm(ContactDate contactDate, boolean creation) {
+        type(By.name("firstname"), contactDate.firstname());
+        type(By.name("middlename"), contactDate.middlename());
+        type(By.name("mobile"), contactDate.mobile());
+        type(By.name("email"), contactDate.email());
+
+        if (creation) {
+            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactDate.group());
+        } else {
+            Assert.assertFalse(isElementPresent(By.name("new_group")));
+        }
     }
 
     public void initContactCreation() {
