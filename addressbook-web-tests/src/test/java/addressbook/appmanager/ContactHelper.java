@@ -35,7 +35,7 @@ public class ContactHelper extends HelperBase {
         }
     }
 
-    public void initContactCreation() {
+    public void selectContactCreation() {
         click(By.linkText("add new"));
         wd.get("http://localhost/addressbook/edit.php");
     }
@@ -44,8 +44,8 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("//input[@value='Delete']"));
     }
 
-    public void selectContact(String id) {
-        click(By.id(id));
+    public void selectContact() {
+        click(By.xpath("//table[@id='maintable']//tr[2]/td[1]/input"));
     }
 
     public void initContactModification() {
@@ -54,5 +54,16 @@ public class ContactHelper extends HelperBase {
 
     public void submitContactModification() {
         click(By.xpath("//div[@id='content']/form/input[22]"));
+    }
+
+    public void createContact(ContactDate contact) {
+        selectContactCreation();
+        fillContactForm(contact, true);
+        submitContactCreation();
+        returnToContact();
+    }
+
+    public boolean isThereContact() {
+        return isElementPresent(By.xpath("//table[@id='maintable']//tr[2]/td[1]/input"));
     }
 }
