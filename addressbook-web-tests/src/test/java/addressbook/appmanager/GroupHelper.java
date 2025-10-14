@@ -3,8 +3,23 @@ package addressbook.appmanager;
 import addressbook.model.GroupDate;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GroupHelper extends HelperBase {
+
+    public List<GroupDate> getGroupList() {
+        List<GroupDate> groups = new ArrayList<>();
+        List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
+        for (WebElement element : elements) {
+            String name = element.getText();
+            GroupDate group = new GroupDate(name, null, null);
+            groups.add(group);
+        }
+        return groups;
+    }
 
     public GroupHelper(WebDriver wd) {
         super(wd);
