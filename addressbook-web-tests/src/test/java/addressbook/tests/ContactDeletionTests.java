@@ -5,20 +5,23 @@ import addressbook.model.GroupDate;
 import org.junit.jupiter.api.Test;
 import org.testng.Assert;
 
+import java.util.List;
+
 
 public class ContactDeletionTests extends TestBase {
 
     @Test
     public void testContactDeletion() throws Exception {
-        int before = app.getContactHelper().getContactCount();
+        List<ContactDate> before = app.getContactHelper().getContactList();
          if (! app.getContactHelper().isThereContact()) {
            app.getContactHelper().createContact(new ContactDate("test1", "test2", "test3", "test4","test1"));
         }
-        app.getContactHelper().selectContact(before - 1);
+        app.getContactHelper().selectContact();
         app.getContactHelper().deleteSelectedContact();
         app.acceptAlert();
-        int after = app.getContactHelper().getContactCount();
-        Assert.assertEquals(after, before - 1);
+        app.getContactHelper().returnToContact();
+        List<ContactDate> after = app.getContactHelper().getContactList();
+        Assert.assertEquals(after.size(), before.size() - 1);
     }
 }
 

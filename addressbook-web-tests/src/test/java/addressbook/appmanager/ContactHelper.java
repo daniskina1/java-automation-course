@@ -3,8 +3,12 @@ package addressbook.appmanager;
 import addressbook.model.ContactDate;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends HelperBase {
     public boolean acceptNextAlert = true;
@@ -15,7 +19,7 @@ public class ContactHelper extends HelperBase {
 
 
     public void returnToContact() {
-        click(By.linkText("home page"));
+        click(By.linkText("home"));
     }
 
     public void submitContactCreation() {
@@ -44,8 +48,8 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("//input[@value='Delete']"));
     }
 
-    public void selectContact(int index) {
-        wd.findElements(By.xpath("//table[@id='maintable']//tr/td[1]/input")).get(index).click();
+    public void selectContact() {
+        click(By.xpath("//table[@id='maintable']//tr[2]/td[1]/input"));
     }
 
     public void initContactModification() {
@@ -69,5 +73,16 @@ public class ContactHelper extends HelperBase {
 
     public int getContactCount() {
         return wd.findElements(By.name("selected[]")).size();
+    }
+
+    public List<ContactDate> getContactList() {
+        List<ContactDate> contacts = new ArrayList<>();
+        List<WebElement> elements = wd.findElements(By.xpath("//table[@id='maintable']//tr[not(@class='header')]"));
+        for (WebElement element : elements) {
+            String name = element.getText();
+            ContactDate contact = new ContactDate(null, null, null,null, null);
+            contacts.add(contact);
+        }
+        return contacts;
     }
 }
