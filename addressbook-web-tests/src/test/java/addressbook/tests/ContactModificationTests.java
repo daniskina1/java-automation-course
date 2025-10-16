@@ -21,5 +21,6 @@ public class ContactModificationTests extends TestBase {
         int after = app.getContactHelper().getContactCount();
         Assert.assertEquals(after, before);
 
+
     }
 }
