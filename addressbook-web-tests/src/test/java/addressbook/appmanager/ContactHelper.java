@@ -9,6 +9,7 @@ import org.testng.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ContactHelper extends HelperBase {
     public boolean acceptNextAlert = true;
@@ -78,13 +79,17 @@ public class ContactHelper extends HelperBase {
     public List<ContactDate> getContactList() {
         List<ContactDate> contacts = new ArrayList<>();
         List<WebElement> elements = wd.findElements(By.xpath("//table[@id='maintable']//tr[not(@class='header')]"));
-        for (WebElement element : elements) {
-            String[] name = element.getText().split("\\s");
-            ContactDate contact = new ContactDate(getByIndexOrNull(name, 1),
+        for (int i = 0; i < elements.size(); i++) {
+            if (i == 0) {
+                continue;
+            }
+            String[] name = elements.get(i).getText().split("\\s");
+            ContactDate contact = new ContactDate(
+                    getByIndexOrNull(name, 1),
                     getByIndexOrNull(name, 0),
                     getByIndexOrNull(name, 3),
                     getByIndexOrNull(name, 2),
-                    null);
+                    getByIndexOrNull(name, 4));
             contacts.add(contact);
         }
         return contacts;
