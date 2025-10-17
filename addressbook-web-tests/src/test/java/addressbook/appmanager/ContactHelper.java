@@ -28,7 +28,7 @@ public class ContactHelper extends HelperBase {
 
     public void fillContactForm(ContactDate contactDate, boolean creation) {
         type(By.name("firstname"), contactDate.firstname());
-        type(By.name("middlename"), contactDate.middlename());
+        type(By.name("lastname"), contactDate.lastname());
         type(By.name("mobile"), contactDate.mobile());
         type(By.name("email"), contactDate.email());
 
@@ -48,7 +48,7 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("//input[@value='Delete']"));
     }
 
-    public void selectContact() {
+    public void selectContact( ) {
         click(By.xpath("//table[@id='maintable']//tr[2]/td[1]/input"));
     }
 
@@ -79,10 +79,21 @@ public class ContactHelper extends HelperBase {
         List<ContactDate> contacts = new ArrayList<>();
         List<WebElement> elements = wd.findElements(By.xpath("//table[@id='maintable']//tr[not(@class='header')]"));
         for (WebElement element : elements) {
-            String name = element.getText();
-            ContactDate contact = new ContactDate(null, null, null,null, null);
+            String[] name = element.getText().split("\\s");
+            ContactDate contact = new ContactDate(getByIndexOrNull(name, 1),
+                    getByIndexOrNull(name, 0),
+                    getByIndexOrNull(name, 3),
+                    getByIndexOrNull(name, 2),
+                    null);
             contacts.add(contact);
         }
         return contacts;
+    }
+
+    private String getByIndexOrNull(String[] s, int index) {
+        if (index > s.length - 1) {
+            return null;
+        }
+        return s[index];
     }
 }
