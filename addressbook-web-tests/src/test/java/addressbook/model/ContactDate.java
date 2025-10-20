@@ -19,22 +19,6 @@ public final class ContactDate {
 
 
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        ContactDate that = (ContactDate) o;
-        return Objects.equals(firstname, that.firstname)
-                && Objects.equals(lastname, that.lastname)
-                && Objects.equals(mobile, that.mobile)
-                && Objects.equals(email, that.email)
-                && Objects.equals(group, that.group);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash( firstname, lastname, mobile, email, group);
-    }
-
-    @Override
     public String toString() {
         return "ContactDate{" +
                 " firstname='" + firstname + '\'' +
@@ -67,4 +51,15 @@ public final class ContactDate {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        ContactDate that = (ContactDate) o;
+        return Objects.equals(firstname, that.firstname) && Objects.equals(lastname, that.lastname);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstname, lastname);
+    }
 }
