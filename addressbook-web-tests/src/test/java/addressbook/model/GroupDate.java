@@ -3,34 +3,27 @@ package addressbook.model;
 import java.util.Objects;
 
 public final class GroupDate {
-    private final String id;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    private int id;
     private final String name;
     private final String header;
     private final String footer;
 
     public GroupDate(String name, String header, String footer) {
-        this.id = null;
+        this.id = 0;
         this.name = name;
         this.header = header;
         this.footer = footer;
     }
-    public GroupDate(String id, String name, String header, String footer) {
+
+    public GroupDate(int id, String name, String header, String footer) {
         this.id = id;
         this.name = name;
         this.header = header;
         this.footer = footer;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        GroupDate groupDate = (GroupDate) o;
-        return Objects.equals(id, groupDate.id) && Objects.equals(name, groupDate.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name);
     }
 
     @Override
@@ -41,7 +34,19 @@ public final class GroupDate {
                 '}';
     }
 
-    public String getId() {
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        GroupDate groupDate = (GroupDate) o;
+        return id == groupDate.id && Objects.equals(name, groupDate.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
+
+    public int getId() {
         return id;
     }
 
