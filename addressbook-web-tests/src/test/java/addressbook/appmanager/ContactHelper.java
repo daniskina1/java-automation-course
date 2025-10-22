@@ -9,7 +9,6 @@ import org.testng.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class ContactHelper extends HelperBase {
     public boolean acceptNextAlert = true;
@@ -61,7 +60,7 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("//div[@id='content']/form/input[22]"));
     }
 
-    public void createContact(ContactDate contact) {
+    public void create(ContactDate contact) {
         selectContactCreation();
         fillContactForm(contact, true);
         submitContactCreation();
@@ -76,7 +75,7 @@ public class ContactHelper extends HelperBase {
         return wd.findElements(By.name("selected[]")).size();
     }
 
-    public List<ContactDate> getContactList() {
+    public List<ContactDate> list() {
         List<ContactDate> contacts = new ArrayList<>();
         List<WebElement> elements = wd.findElements(By.xpath("//table[@id='maintable']//tr[not(@class='header')]"));
         for (int i = 0; i < elements.size(); i++) {
@@ -105,11 +104,17 @@ public class ContactHelper extends HelperBase {
         wd.switchTo().alert().accept();
     }
 
-    public void modifyContact(ContactDate contact) {
+    public void modify(ContactDate contact) {
         selectContact();
         initContactModification();
         fillContactForm(contact, false);
         submitContactModification();
+        returnToContact();
+    }
+    public void delete() {
+        selectContact();
+        deleteSelectedContact();
+        acceptAlert();
         returnToContact();
     }
 }

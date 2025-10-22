@@ -1,8 +1,6 @@
 package addressbook.tests;
 
 import addressbook.model.ContactDate;
-import addressbook.model.GroupDate;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.testng.Assert;
 
@@ -13,10 +11,10 @@ public class ContactCreationTests extends TestBase {
 
         @Test
         public void testUntitledTestCase() throws Exception {
-            List<ContactDate> before = app.getContactHelper().getContactList();
+            List<ContactDate> before = app.contact().list();
             ContactDate contact = new ContactDate("test1", "test2", "test3", "test4","test1");
-            app.getContactHelper().createContact(contact);
-            List<ContactDate> after = app.getContactHelper().getContactList();
+            app.contact().create(contact);
+            List<ContactDate> after = app.contact().list();
             Assert.assertEquals(after.size(), before.size() + 1);
 
             before.add(contact);
