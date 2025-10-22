@@ -5,18 +5,17 @@ import org.junit.jupiter.api.Test;
 import org.testng.Assert;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 
 public class GroupCreationTests extends TestBase {
 
     @Test
     public void testGroupCreation()  {
-        app.getNavigationHelper().gotoGroupPage();
-        List<GroupDate> before = app.getGroupHelper().getGroupList();
+        app.goTo().GroupPage();
+        List<GroupDate> before = app.group().list();
         GroupDate group = new GroupDate("test2", null, null);
-        app.getGroupHelper().createGroup(group);
-        List<GroupDate> after = app.getGroupHelper().getGroupList();
+        app.group().create(group);
+        List<GroupDate> after = app.group().list();
         Assert.assertEquals(after.size(), before.size() + 1);
 
 

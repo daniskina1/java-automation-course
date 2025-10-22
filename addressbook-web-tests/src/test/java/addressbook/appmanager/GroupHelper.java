@@ -10,7 +10,7 @@ import java.util.List;
 
 public class GroupHelper extends HelperBase {
 
-    public List<GroupDate> getGroupList() {
+    public List<GroupDate> list() {
         List<GroupDate> groups = new ArrayList<>();
         List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
         for (WebElement element : elements) {
@@ -60,18 +60,23 @@ public class GroupHelper extends HelperBase {
         click(By.name("update"));
     }
 
-    public void createGroup(GroupDate group) {
+    public void create(GroupDate group) {
         initGroupCreation();
         fillGroupForm(group);
         submitGroupCreation();
         returnToGroupPage();
     }
 
-    public void modifyGroup(int index, GroupDate group) {
+    public void modify(int index, GroupDate group) {
         selectGroup(index);
         initGroupModification();
         fillGroupForm(group);
         sudmitGroupModification();
+        returnToGroupPage();
+    }
+    public void delete(int index) {
+        selectGroup(index);
+        deleteSelectGroup();
         returnToGroupPage();
     }
     public boolean isThereAGroup() {
