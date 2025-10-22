@@ -1,6 +1,7 @@
 package addressbook.tests;
 
 import addressbook.model.ContactDate;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.testng.Assert;
 
@@ -11,7 +12,6 @@ import java.util.List;
 public class ContactModificationTests extends TestBase {
 
     @Test
-
     public void testContactModification() {
 
         if (! app.getContactHelper().isThereContact()) {

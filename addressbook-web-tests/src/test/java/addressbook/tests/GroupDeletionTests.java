@@ -1,19 +1,24 @@
 package addressbook.tests;
 
 import addressbook.model.GroupDate;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testng.Assert;
 
 import java.util.List;
 
 public class GroupDeletionTests extends TestBase {
-
-    @Test
-    public void testGroupDeletion() throws Exception {
+    @BeforeEach
+    public void ensurePreconditions() {
         app.getNavigationHelper().gotoGroupPage();
         if (! app.getGroupHelper().isThereAGroup()) {
             app.getGroupHelper().createGroup(new GroupDate("test1", "test2", "test3"));
         }
+    }
+
+    @Test
+    public void testGroupDeletion() throws Exception {
+
         List<GroupDate> before = app.getGroupHelper().getGroupList();
         app.getGroupHelper().selectGroup(before.size() - 1);
         app.getGroupHelper().deleteSelectGroup();

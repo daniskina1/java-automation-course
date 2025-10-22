@@ -1,21 +1,21 @@
 package addressbook.tests;
 
 import addressbook.appmanager.ApplicationManager;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.remote.Browser;
 
 public class TestBase {
 
-    protected final ApplicationManager app = new ApplicationManager(Browser.CHROME.browserName());
+    protected static final ApplicationManager app = new ApplicationManager(Browser.CHROME.browserName());
 
-    @BeforeEach
-    public void setUp()  {
+    @BeforeAll
+    public static void setUp()  {
         app.init();
     }
 
-    @AfterEach
-    public void tearDown()  {
+    @AfterAll
+    public static void tearDown()  {
         app.stop();
     }
 
