@@ -101,4 +101,15 @@ public class ContactHelper extends HelperBase {
         }
         return s[index];
     }
+    public void acceptAlert() {
+        wd.switchTo().alert().accept();
+    }
+
+    public void modifyContact(ContactDate contact) {
+        selectContact();
+        initContactModification();
+        fillContactForm(contact, false);
+        submitContactModification();
+        returnToContact();
+    }
 }

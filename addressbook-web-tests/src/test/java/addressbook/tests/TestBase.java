@@ -10,12 +10,12 @@ public class TestBase {
     protected static final ApplicationManager app = new ApplicationManager(Browser.CHROME.browserName());
 
     @BeforeAll
-    public static void setUp()  {
+    public static void setUp() throws Exception {
         app.init();
     }
 
     @AfterAll
-    public static void tearDown()  {
+    public static void tearDown() throws Exception {
         app.stop();
     }
 

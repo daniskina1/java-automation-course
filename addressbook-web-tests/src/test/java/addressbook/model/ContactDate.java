@@ -62,4 +62,5 @@ public final class ContactDate {
     public int hashCode() {
         return Objects.hash(firstname, lastname);
     }
+
 }
