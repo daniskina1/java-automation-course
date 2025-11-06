@@ -1,12 +1,19 @@
 package addressbook.tests;
 
 import addressbook.model.GroupDate;
+import addressbook.model.Groups;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testng.Assert;
 
 
 import java.util.Set;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 public class GroupDeletionTests extends TestBase {
     @BeforeEach
@@ -20,14 +27,13 @@ public class GroupDeletionTests extends TestBase {
     @Test
     public void testGroupDeletion() throws Exception {
 
-        Set<GroupDate> before = app.group().all();
+        Groups before = app.group().all();
         GroupDate deletedGroup = before.iterator().next();
         app.group().delete(deletedGroup);
-        Set<GroupDate> after = app.group().all();
-        Assert.assertEquals(after.size(), before.size() - 1);
+        Groups after = app.group().all();
+        assertEquals(after.size(), before.size() - 1);
+        assertThat(after, equalTo(before.without(deletedGroup)));
 
-        before.remove(deletedGroup);
-        Assert.assertEquals(before, after);
 
     }
 
