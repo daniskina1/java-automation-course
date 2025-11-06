@@ -1,6 +1,9 @@
 package addressbook.tests;
 
 import addressbook.model.ContactDate;
+import addressbook.model.Contacts;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testng.Assert;
@@ -8,6 +11,10 @@ import org.testng.Assert;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 public class ContactModificationTests extends TestBase {
 
@@ -19,20 +26,15 @@ public class ContactModificationTests extends TestBase {
     }
     @Test
     public void testContactModification() {
-        Set<ContactDate> before = app.contact().all();
+        Contacts before = app.contact().all();
         ContactDate modifiedContact = before.iterator().next();
         ContactDate contact = new ContactDate()
                 .withId(modifiedContact.getId()).withFirstname("test1").withLastname("test2").withMobile("test3").withEmail("test4").withGroup("test1");
         app.contact().modify(contact);
-        Set<ContactDate> after = app.contact().all();
-
-        before.remove(modifiedContact);
-        before.add(contact);
-        Assert.assertEquals(before, after);
-
-
+        Contacts after = app.contact().all();
+        assertEquals(after.size(), before.size());
+        assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
 
     }
-
 
 }

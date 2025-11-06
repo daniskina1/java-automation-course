@@ -1,12 +1,14 @@
 package addressbook.tests;
 
 import addressbook.model.ContactDate;
+import addressbook.model.Contacts;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.testng.Assert;
 
 
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 
 public class ContactDeletionTests extends TestBase {
@@ -19,14 +21,13 @@ public class ContactDeletionTests extends TestBase {
 
     @Test
     public void testContactDeletion() throws Exception {
-        Set<ContactDate> before = app.contact().all();
+        Contacts before = app.contact().all();
         ContactDate deletedContact = before.iterator().next();
         app.contact().delete(deletedContact);
-        Set<ContactDate> after = app.contact().all();
-        Assert.assertEquals(after.size(), before.size() - 1);
+        Contacts after = app.contact().all();
+        assertThat(after.size(), equalTo(before.size() - 1));
+        assertThat(after, equalTo(before.without(deletedContact)));
 
-        before.remove(deletedContact);
-        Assert.assertEquals(before, after);
     }
 
 

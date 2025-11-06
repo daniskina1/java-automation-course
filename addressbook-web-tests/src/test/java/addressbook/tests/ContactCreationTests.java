@@ -1,25 +1,27 @@
 package addressbook.tests;
 
 import addressbook.model.ContactDate;
+import addressbook.model.Contacts;
 import org.junit.jupiter.api.Test;
-import org.testng.Assert;
 
 
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+
 
 public class ContactCreationTests extends TestBase {
 
         @Test
         public void testUntitledTestCase() throws Exception {
-            Set<ContactDate> before = app.contact().all();
+            Contacts before = app.contact().all();
             ContactDate contact = new ContactDate().withFirstname("test1").withLastname("test2").withMobile("test3").withEmail("test4").withGroup("test1");
             app.contact().create(contact);
-            Set<ContactDate> after = app.contact().all();
-            Assert.assertEquals(after.size(), before.size() + 1);
+            Contacts after = app.contact().all();
+            assertThat(after.size(), equalTo(before.size() + 1));
 
-            contact.withId(after.stream().mapToInt(g -> g.getId()).max().getAsInt());
-            before.add(contact);
-            Assert.assertEquals(before, after);
+            assertThat(after, equalTo(
+                    before.withAdded(contact.withId(after.stream().mapToInt(g -> g.getId()).max().getAsInt()))));
         }
 
 }
