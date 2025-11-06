@@ -3,24 +3,29 @@ package addressbook.model;
 import java.util.Objects;
 
 public final class ContactDate {
-    private final String firstname;
-    private final String lastname;
-    private final String mobile;
-    private final String email;
-    private final String group;
+    private int id;
+    private  String firstname;
+    private  String lastname;
+    private  String mobile;
+    private  String email;
+    private  String group;
 
-    public ContactDate(String firstname, String lastname, String mobile, String email, String group) {
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.mobile = mobile;
-        this.email = email;
-        this.group = group;
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        ContactDate that = (ContactDate) o;
+        return id == that.id && Objects.equals(firstname, that.firstname) && Objects.equals(lastname, that.lastname);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstname, lastname);
+    }
 
     @Override
     public String toString() {
         return "ContactDate{" +
+                "id=" + id +
                 " firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", mobile='" + mobile + '\'' +
@@ -29,6 +34,39 @@ public final class ContactDate {
                 '}';
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public ContactDate withId(int id) {
+        this.id = id;
+        return this;
+    }
+
+    public ContactDate withFirstname(String firstname) {
+        this.firstname = firstname;
+        return this;
+    }
+
+    public ContactDate withLastname(String lastname) {
+        this.lastname = lastname;
+        return this;
+    }
+
+    public ContactDate withMobile(String mobile) {
+        this.mobile = mobile;
+        return this;
+    }
+
+    public ContactDate withEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public ContactDate withGroup(String group) {
+        this.group = group;
+        return this;
+    }
 
     public String firstname() {
         return firstname;
@@ -50,17 +88,5 @@ public final class ContactDate {
         return group;
     }
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        ContactDate that = (ContactDate) o;
-        return Objects.equals(firstname, that.firstname) && Objects.equals(lastname, that.lastname);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(firstname, lastname);
-    }
 
 }

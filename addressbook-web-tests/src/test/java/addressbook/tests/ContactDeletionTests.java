@@ -5,26 +5,27 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testng.Assert;
 
-import java.util.List;
+
+import java.util.Set;
 
 
 public class ContactDeletionTests extends TestBase {
     @BeforeEach
     public void ensurePreconditions () {
-        if (app.contact().list().isEmpty()) {
-            app.contact().create(new ContactDate("test1", "test2", "test3", "test4", "test1"));
+        if (app.contact().all().isEmpty()) {
+            app.contact().create(new ContactDate().withFirstname("test1").withLastname("test2").withMobile("test3").withEmail("test4").withGroup("test1"));
         }
     }
 
     @Test
     public void testContactDeletion() throws Exception {
-        List<ContactDate> before = app.contact().list();
-        int index = before.size() -1;
-        app.contact().delete();
-        List<ContactDate> after = app.contact().list();
+        Set<ContactDate> before = app.contact().all();
+        ContactDate deletedContact = before.iterator().next();
+        app.contact().delete(deletedContact);
+        Set<ContactDate> after = app.contact().all();
         Assert.assertEquals(after.size(), before.size() - 1);
 
-        before.remove(index);
+        before.remove(deletedContact);
         Assert.assertEquals(before, after);
     }
 

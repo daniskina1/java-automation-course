@@ -7,8 +7,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
-import java.util.ArrayList;
+
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ContactHelper extends HelperBase {
     public boolean acceptNextAlert = true;
@@ -48,8 +50,8 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("//input[@value='Delete']"));
     }
 
-    public void selectContact( ) {
-        click(By.xpath("//table[@id='maintable']//tr[2]/td[1]/input"));
+    public void selectContactById(int id) {
+        click(By.xpath("//input[@value='" + id + "']"));
     }
 
     public void initContactModification() {
@@ -75,44 +77,43 @@ public class ContactHelper extends HelperBase {
         return wd.findElements(By.name("selected[]")).size();
     }
 
-    public List<ContactDate> list() {
-        List<ContactDate> contacts = new ArrayList<>();
-        List<WebElement> elements = wd.findElements(By.xpath("//table[@id='maintable']//tr[not(@class='header')]"));
-        for (int i = 0; i < elements.size(); i++) {
-            if (i == 0) {
+    public Set<ContactDate> all() {
+        Set<ContactDate> contacts = new HashSet<ContactDate>();
+        List<WebElement> rows = wd.findElements(By.xpath("//table[@id='maintable']//tr[not(@class='header')]"));
+        for (WebElement row : rows) {
+            List<WebElement> cells = row.findElements(By.tagName("td"));
+            // Пропускаем пустые строки или строки без данных
+            if (cells.size() < 5) {
                 continue;
             }
-            String[] name = elements.get(i).getText().split("\\s");
-            ContactDate contact = new ContactDate(
-                    getByIndexOrNull(name, 1),
-                    getByIndexOrNull(name, 0),
-                    getByIndexOrNull(name, 3),
-                    getByIndexOrNull(name, 2),
-                    getByIndexOrNull(name, 4));
-            contacts.add(contact);
+            int id = Integer.parseInt(cells.get(0).findElement(By.tagName("input")).getAttribute("value"));
+            String firstname = cells.get(2).getText();
+            String lastname = cells.get(1).getText();
+
+            contacts.add(new ContactDate()
+                    .withId(id)
+                    .withFirstname(firstname)
+                    .withLastname(lastname)
+                    .withMobile(cells.get(3).getText())
+                    .withEmail(cells.get(4).getText()));
         }
         return contacts;
     }
 
-    private String getByIndexOrNull(String[] s, int index) {
-        if (index > s.length - 1) {
-            return null;
-        }
-        return s[index];
-    }
     public void acceptAlert() {
         wd.switchTo().alert().accept();
     }
 
     public void modify(ContactDate contact) {
-        selectContact();
+        selectContactById(contact.getId());
         initContactModification();
         fillContactForm(contact, false);
         submitContactModification();
         returnToContact();
     }
-    public void delete() {
-        selectContact();
+
+    public void delete(ContactDate contact) {
+        selectContactById(contact.getId());
         deleteSelectedContact();
         acceptAlert();
         returnToContact();

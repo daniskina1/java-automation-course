@@ -7,30 +7,27 @@ import org.testng.Assert;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 public class ContactModificationTests extends TestBase {
 
     @BeforeEach
     public void ensurePreconditions () {
-        if (app.contact().list().isEmpty()) {
-            app.contact().create(new ContactDate("test1", "test2", "test3", "test4","test1"));
+        if (app.contact().all().isEmpty()) {
+            app.contact().create(new ContactDate().withFirstname("test1").withLastname("test2").withMobile("test3").withEmail("test4").withGroup("test1"));
         }
     }
     @Test
     public void testContactModification() {
-        List<ContactDate> before = app.contact().list();
-        int index = before.size() -1;
-        ContactDate contact = new ContactDate("test1", "test2", "test3", "test4", null);
-
+        Set<ContactDate> before = app.contact().all();
+        ContactDate modifiedContact = before.iterator().next();
+        ContactDate contact = new ContactDate()
+                .withId(modifiedContact.getId()).withFirstname("test1").withLastname("test2").withMobile("test3").withEmail("test4").withGroup("test1");
         app.contact().modify(contact);
-        List<ContactDate> after = app.contact().list();
+        Set<ContactDate> after = app.contact().all();
 
-        before.remove(index);
+        before.remove(modifiedContact);
         before.add(contact);
-        Comparator<? super ContactDate> byName =
-                (c1, c2) -> c1.lastname().compareToIgnoreCase(c2.lastname());
-        before.sort(byName);
-        after.sort(byName);
         Assert.assertEquals(before, after);
 
 
