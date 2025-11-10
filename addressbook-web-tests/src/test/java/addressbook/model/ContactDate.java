@@ -76,8 +76,6 @@ public final class ContactDate {
         return this;
     }
 
-
-
     public ContactDate withMobilePhone(String mobilePhone) {
         this.mobilePhone = mobilePhone;
         return this;

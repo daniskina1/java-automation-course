@@ -89,8 +89,7 @@ public class ContactHelper extends HelperBase {
             String allAddress = cells.get(3).getText();
 
             contacts.add(new ContactDate().withId(id).withFirstname(firstname).withLastname(lastname)
-                    .withAllPhones(allPhones)
-                    .withAllEmails(allEmails).withAllAddress(allAddress));
+                    .withAllPhones(allPhones).withAllEmails(allEmails).withAllAddress(allAddress));
         }
         return contacts;
     }
