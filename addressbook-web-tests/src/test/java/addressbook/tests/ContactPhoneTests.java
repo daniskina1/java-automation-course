@@ -4,6 +4,9 @@ import addressbook.model.ContactDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -21,11 +24,17 @@ public class ContactPhoneTests extends TestBase {
         ContactDate contact = app.contact().all().iterator().next();
         ContactDate contactInfoFromEditFrom = app.contact().infoFromEditFrom(contact);
 
-        assertThat(contact.getHomePhone(), equalTo(cleaned(contactInfoFromEditFrom.getHomePhone())));
-        assertThat(contact.getMobilePhone(), equalTo(cleaned(contactInfoFromEditFrom.getMobilePhone())));
-        assertThat(contact.getWorkPhone(), equalTo(cleaned(contactInfoFromEditFrom.getWorkPhone())));
+        assertThat(contact.getAllPhones(), equalTo(mergePhones(contactInfoFromEditFrom)));
     }
-    public String cleaned (String phone) {
+
+    private String mergePhones(ContactDate contact) {
+        return Arrays.asList(contact.getHomePhone(), contact.getMobilePhone(), contact.getWorkPhone())
+                .stream().filter((s) -> ! s.equals(""))
+                .map(ContactPhoneTests::cleaned)
+                .collect(Collectors.joining("\n"));
+    }
+
+    public static String cleaned (String phone) {
         return phone.replaceAll("\\s", "").replaceAll("[-()]","");
     }
 }
