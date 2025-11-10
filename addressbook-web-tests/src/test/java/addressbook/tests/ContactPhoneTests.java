@@ -1,0 +1,31 @@
+package addressbook.tests;
+
+import addressbook.model.ContactDate;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+public class ContactPhoneTests extends TestBase {
+    @BeforeEach
+    public void ensurePreconditions () {
+        if (app.contact().all().isEmpty()) {
+            app.contact().create(new ContactDate().withFirstname("test1").withLastname("test2").withMobile("test3").withEmail("test4").withGroup("test1"));
+        }
+    }
+
+    @Test
+    public void testContactPhones() {
+
+        ContactDate contact = app.contact().all().iterator().next();
+        ContactDate contactInfoFromEditFrom = app.contact().infoFromEditFrom(contact);
+
+        assertThat(contact.getHomePhone(), equalTo(cleaned(contactInfoFromEditFrom.getHomePhone())));
+        assertThat(contact.getMobilePhone(), equalTo(cleaned(contactInfoFromEditFrom.getMobilePhone())));
+        assertThat(contact.getWorkPhone(), equalTo(cleaned(contactInfoFromEditFrom.getWorkPhone())));
+    }
+    public String cleaned (String phone) {
+        return phone.replaceAll("\\s", "").replaceAll("[-()]","");
+    }
+}
