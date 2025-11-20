@@ -2,6 +2,7 @@ package addressbook.tests;
 
 import addressbook.model.GroupDate;
 import addressbook.model.Groups;
+import com.thoughtworks.xstream.XStream;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -13,6 +14,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -22,22 +24,18 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class GroupCreationTests extends TestBase {
 
     public static Stream<Arguments> validGroups() throws IOException {
-        List<Arguments> list = new ArrayList<>();
-        BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/groups.csv"));
-        String line = reader.readLine();
-        while (line != null) {
-            String[] split = line.split(",");
-             if (split.length >= 3) { list.add(Arguments.of(new GroupDate()
-                       .withName(split[0])
-                       .withHeader(split[1])
-                       .withFooter(split[2])));
-           } else {
-                System.err.println("ОШИБКА: В строке '" + line + "' недостаточно данных. Найдено полей: " + split.length);
-            }
-            line = reader.readLine();
+        String xml;
+        try (BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/groups.xml"))) {
+            xml = reader.lines().collect(Collectors.joining());
         }
-        reader.close();
-        return list.stream();
+        XStream xstream = new XStream();
+        // Настройка безопасности для XStream
+        XStream.setupDefaultSecurity(xstream);
+        xstream.allowTypes(new Class[]{GroupDate.class});
+        xstream.alias("group", GroupDate.class);
+
+        List<GroupDate> groups = (List<GroupDate>) xstream.fromXML(xml);
+        return groups.stream().map(Arguments::of);
     }
 
     @ParameterizedTest

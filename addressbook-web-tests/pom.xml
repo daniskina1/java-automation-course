@@ -77,6 +77,12 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+            <version>1.4.21</version>
+        </dependency>
+
         <!--  Slf4j-simple  -->
         <dependency>
             <groupId>org.slf4j</groupId>
