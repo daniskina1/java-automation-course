@@ -1,15 +1,21 @@
 package addressbook.model;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.File;
 import java.util.Objects;
 
 public final class ContactDate {
     private int id;
+    @Expose
     private  String firstname;
+    @Expose
     private  String lastname;
+    @Expose
     private  String mobilePhone;
     private String homePhone;
     private String workPhone;
+    @Expose
     private  String email;
     private String email2;
     private String email3;
