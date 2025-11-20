@@ -44,6 +44,19 @@ public final class GroupDate {
     public String footer() {
         return footer;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getHeader() {
+        return header;
+    }
+
+    public String getFooter() {
+        return footer;
+    }
+
     public GroupDate withId(int id) {
         this.id = id;
         return this;
