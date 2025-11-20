@@ -1,5 +1,6 @@
 package addressbook.model;
 
+import java.io.File;
 import java.util.Objects;
 
 public final class ContactDate {
@@ -16,6 +17,14 @@ public final class ContactDate {
     private String allPhones;
     private String allEmails;
     private String allAddress;
+    private File photo;
+
+
+
+    public ContactDate withPhoto(File photo) {
+        this.photo = photo;
+        return this;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -182,5 +191,9 @@ public final class ContactDate {
 
     public String getGroup() {
         return group;
+    }
+
+    public File getPhoto() {
+        return photo;
     }
 }
