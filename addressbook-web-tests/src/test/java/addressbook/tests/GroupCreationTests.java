@@ -2,6 +2,8 @@ package addressbook.tests;
 
 import addressbook.model.GroupDate;
 import addressbook.model.Groups;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -23,7 +25,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GroupCreationTests extends TestBase {
 
-    public static Stream<Arguments> validGroups() throws IOException {
+    public static Stream<Arguments> validGroupsFromXml() throws IOException {
         String xml;
         try (BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/groups.xml"))) {
             xml = reader.lines().collect(Collectors.joining());
@@ -38,8 +40,22 @@ public class GroupCreationTests extends TestBase {
         return groups.stream().map(Arguments::of);
     }
 
+    public static Stream<Arguments> validGroupsFromJson() throws IOException {
+        StringBuilder json = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/groups.json"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                json.append(line);
+            }
+        }
+        Gson gson = new Gson();
+        List<GroupDate> groups = gson.fromJson(json.toString(), new TypeToken<List<GroupDate>>(){}.getType());
+        return groups.stream().map(Arguments::of);
+    }
+
+
     @ParameterizedTest
-    @MethodSource("validGroups")
+    @MethodSource("validGroupsFromJson")
     public void testGroupCreation( GroupDate group)  {
         app.goTo().GroupPage();
         Groups before = app.group().all();
