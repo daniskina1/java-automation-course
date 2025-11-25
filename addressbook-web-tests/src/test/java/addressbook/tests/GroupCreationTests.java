@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 import java.io.BufferedReader;
@@ -24,6 +26,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 
 public class GroupCreationTests extends TestBase {
+
+    Logger logger = LoggerFactory.getLogger(GroupCreationTests.class);
 
     public static Stream<Arguments> validGroupsFromXml() throws IOException {
         String xml;
@@ -57,6 +61,7 @@ public class GroupCreationTests extends TestBase {
     @ParameterizedTest
     @MethodSource("validGroupsFromJson")
     public void testGroupCreation( GroupDate group)  {
+        logger.info("Start test testGroupCreation");
         app.goTo().GroupPage();
         Groups before = app.group().all();
         app.group().create(group);
@@ -64,6 +69,7 @@ public class GroupCreationTests extends TestBase {
         Groups after = app.group().all();
         assertThat(after, equalTo(
                 before.withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+        logger.info("Stop test testGroupCreation");
 
     }
 
