@@ -227,6 +227,9 @@ public final class ContactDate {
     }
 
     public File getPhoto() {
+        if (photo == null || photo.isEmpty()) {
+            return null;
+        }
         return new File(photo);
     }
 }
