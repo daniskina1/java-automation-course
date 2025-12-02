@@ -1,34 +1,61 @@
 package addressbook.model;
 
 import com.google.gson.annotations.Expose;
+import jakarta.persistence.*;
 
 import java.io.File;
 import java.util.Objects;
 
+@Entity
+@Table (name = "addressbook")
 public final class ContactDate {
+    @Id
+    @Column(name ="id")
     private int id;
+
     @Expose
+    @Column(name ="firstname")
     private  String firstname;
+
     @Expose
+    @Column(name ="lastname")
     private  String lastname;
+
     @Expose
+    @Column(name ="mobile")
+    @Lob
     private  String mobilePhone;
+
+    @Column(name ="home")
+    @Lob
     private String homePhone;
+
+    @Column(name ="work")
+    @Lob
     private String workPhone;
+
     @Expose
     private  String email;
     private String email2;
     private String email3;
+
+    @Transient
     private  String group;
+    @Transient
     private String allPhones;
+    @Transient
     private String allEmails;
+    @Transient
     private String allAddress;
-    private File photo;
+
+    @Column(name = "photo")
+    @Lob
+    private String photo;
 
 
 
     public ContactDate withPhoto(File photo) {
-        this.photo = photo;
+        this.photo = photo.getPath();
         return this;
     }
 
@@ -200,6 +227,6 @@ public final class ContactDate {
     }
 
     public File getPhoto() {
-        return photo;
+        return new File(photo);
     }
 }
