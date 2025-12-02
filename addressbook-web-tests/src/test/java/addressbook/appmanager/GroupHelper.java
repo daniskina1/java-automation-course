@@ -74,6 +74,7 @@ public class GroupHelper extends HelperBase {
     }
 
     public void modify( GroupDate group) {
+
         selectGroupById(group.getId());
         initGroupModification();
         fillGroupForm(group);

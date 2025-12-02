@@ -17,12 +17,14 @@ public class ApplicationManager {
     private NavigationHelper navigationHelper ;
     private GroupHelper groupHelper;
     JavascriptExecutor js;
+    private DbHelper dbHelper;
 
     public ApplicationManager(String browser) {
         this.browser = browser;
     }
 
     public void init() {
+        dbHelper = new DbHelper();
         if (browser.equals(Browser.CHROME.browserName())){
             wd = new ChromeDriver();
         } else if (browser.equals(Browser.FIREFOX.browserName())) {
@@ -55,5 +57,9 @@ public class ApplicationManager {
 
     public ContactHelper contact() {
         return contactHelper;
+    }
+
+    public  DbHelper db() {
+        return dbHelper;
     }
 }

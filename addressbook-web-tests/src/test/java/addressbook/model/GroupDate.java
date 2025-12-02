@@ -27,18 +27,6 @@ public final class GroupDate {
     private String footer;
 
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        GroupDate groupDate = (GroupDate) o;
-        return id == groupDate.id && Objects.equals(name, groupDate.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name);
-    }
-
-    @Override
     public String toString() {
         return "GroupDate{" +
                 "id='" + id + '\'' +
@@ -94,4 +82,15 @@ public final class GroupDate {
         return this;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        GroupDate groupDate = (GroupDate) o;
+        return id == groupDate.id && Objects.equals(name, groupDate.name) && Objects.equals(header, groupDate.header) && Objects.equals(footer, groupDate.footer);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, header, footer);
+    }
 }
