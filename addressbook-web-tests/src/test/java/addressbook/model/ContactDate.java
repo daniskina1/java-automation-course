@@ -60,18 +60,6 @@ public final class ContactDate {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        ContactDate that = (ContactDate) o;
-        return id == that.id && Objects.equals(firstname, that.firstname) && Objects.equals(lastname, that.lastname);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstname, lastname);
-    }
-
-    @Override
     public String toString() {
         return "ContactDate{" +
                 "id=" + id +
@@ -224,6 +212,18 @@ public final class ContactDate {
 
     public String getGroup() {
         return group;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        ContactDate that = (ContactDate) o;
+        return id == that.id && Objects.equals(firstname, that.firstname) && Objects.equals(lastname, that.lastname) && Objects.equals(mobilePhone, that.mobilePhone) && Objects.equals(email, that.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstname, lastname, mobilePhone, email);
     }
 
     public File getPhoto() {
