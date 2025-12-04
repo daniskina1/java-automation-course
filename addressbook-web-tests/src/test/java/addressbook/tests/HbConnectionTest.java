@@ -1,7 +1,6 @@
 package addressbook.tests;
 
 import addressbook.model.ContactDate;
-import addressbook.model.GroupDate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -9,7 +8,6 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.testng.annotations.BeforeClass;
 
 import java.util.List;
 
@@ -39,12 +37,12 @@ public class HbConnectionTest {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         List<ContactDate> result = session.createQuery( "from ContactDate " ).list();
-        for ( ContactDate contact : result ) {
-            System.out.println(contact);
-        }
-
         session.getTransaction().commit();
         session.close();
+        for ( ContactDate contact : result ) {
+            System.out.println(contact);
+            System.out.println(contact.getGroups());
+        }
 
     }
 }

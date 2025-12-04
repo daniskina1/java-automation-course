@@ -4,7 +4,9 @@ import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 
 import java.io.File;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table (name = "addressbook")
@@ -39,8 +41,19 @@ public final class ContactDate {
     private String email2;
     private String email3;
 
-    @Transient
+   @Transient
     private  String group;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "address_in_groups",
+            joinColumns = @JoinColumn(name = "id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id"))
+    private Set<GroupDate> groups = new HashSet<GroupDate>();
+
+    public Groups getGroups() {
+        return new Groups(groups);
+    }
+
     @Transient
     private String allPhones;
     @Transient
@@ -67,7 +80,7 @@ public final class ContactDate {
                 ", lastname='" + lastname + '\'' +
                 ", mobile='" + mobilePhone + '\'' +
                 ", email='" + email + '\'' +
-                ", group='" + group + '\'' +
+            //    ", group='" + group + '\'' +
                 '}';
     }
 
@@ -101,7 +114,7 @@ public final class ContactDate {
         return this;
     }
 
-    public ContactDate withGroup(String group) {
+    public ContactDate withGroup(String groups) {
         this.group = group;
         return this;
     }
@@ -212,7 +225,7 @@ public final class ContactDate {
 
     public String getGroup() {
         return group;
-    }
+   }
 
     @Override
     public boolean equals(Object o) {

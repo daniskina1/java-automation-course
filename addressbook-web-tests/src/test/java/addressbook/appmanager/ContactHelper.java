@@ -35,8 +35,9 @@ public class ContactHelper extends HelperBase {
         attach(By.name("photo"), contactDate.getPhoto());
 
         if (creation) {
-            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactDate.group());
-        } else {
+      //      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactDate.group());
+       }
+        else {
             Assert.assertFalse(isElementPresent(By.name("new_group")));
         }
     }

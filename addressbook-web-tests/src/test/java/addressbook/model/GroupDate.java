@@ -5,7 +5,9 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @XStreamAlias("group")
 @Entity
@@ -25,6 +27,13 @@ public final class GroupDate {
     @Column(name = "group_footer")
     @Lob
     private String footer;
+
+    @ManyToMany(mappedBy = "groups")
+    private Set<ContactDate> contacts = new HashSet<ContactDate>();
+
+    public Set<ContactDate> getContacts() {
+        return contacts;
+    }
 
     @Override
     public String toString() {
