@@ -2,6 +2,8 @@ package addressbook.tests;
 
 import addressbook.model.ContactDate;
 import addressbook.model.Contacts;
+import addressbook.model.GroupDate;
+import addressbook.model.Groups;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -47,14 +49,27 @@ public class ContactCreationTests extends TestBase {
     @MethodSource("validContactsFromJson")
         public void testContactCreation() throws Exception {
             Contacts before = app.db().contacts();
-        // File photo = new File("src/test/resources/stru.png");
-            ContactDate contact = new ContactDate().withFirstname("test1").withLastname("test2").withMobile("test3").withEmail("test4").withGroup("test1");//.withPhoto(photo);
-            app.contact().create(contact);
+            Groups groups = app.db().groups();
+          if (groups.size() == 0) {
+            app.goTo().GroupPage();
+            // Создаем группу если нет групп
+            GroupDate group = new GroupDate().withName("test_group");
+            app.group().create(group);
+            groups = app.db().groups();
+        }
+        File photo = new File("src/test/resources/stru.png");
+        ContactDate newContact = new ContactDate().withFirstname("test_name")
+                .withLastname("test_surname")
+                .withPhoto(photo).withMobile("1234567890")
+                .withEmail("@email.com");
+
+            app.contact().create(newContact);
+
             Contacts after = app.db().contacts();
             assertThat(after.size(), equalTo(before.size() + 1));
 
             assertThat(after, equalTo(
-                    before.withAdded(contact.withId(after.stream().mapToInt(g -> g.getId()).max().getAsInt()))));
+                    before.withAdded(newContact.withId(after.stream().mapToInt(g -> g.getId()).max().getAsInt()))));
         }
 
 }

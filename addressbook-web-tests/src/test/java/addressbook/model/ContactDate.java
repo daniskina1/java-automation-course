@@ -12,37 +12,37 @@ import java.util.Set;
 @Table (name = "addressbook")
 public final class ContactDate {
     @Id
-    @Column(name ="id")
+    @Column(name = "id")
     private int id;
 
     @Expose
-    @Column(name ="firstname")
-    private  String firstname;
+    @Column(name = "firstname")
+    private String firstname;
 
     @Expose
-    @Column(name ="lastname")
-    private  String lastname;
+    @Column(name = "lastname")
+    private String lastname;
 
     @Expose
-    @Column(name ="mobile")
+    @Column(name = "mobile")
     @Lob
-    private  String mobilePhone;
+    private String mobilePhone;
 
-    @Column(name ="home")
+    @Column(name = "home")
     @Lob
     private String homePhone;
 
-    @Column(name ="work")
+    @Column(name = "work")
     @Lob
     private String workPhone;
 
     @Expose
-    private  String email;
+    private String email;
     private String email2;
     private String email3;
 
-   @Transient
-    private  String group;
+     @Transient
+      private  String group;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "address_in_groups",
@@ -66,7 +66,6 @@ public final class ContactDate {
     private String photo;
 
 
-
     public ContactDate withPhoto(File photo) {
         this.photo = photo.getPath();
         return this;
@@ -80,7 +79,7 @@ public final class ContactDate {
                 ", lastname='" + lastname + '\'' +
                 ", mobile='" + mobilePhone + '\'' +
                 ", email='" + email + '\'' +
-            //    ", group='" + group + '\'' +
+                //    ", group='" + group + '\'' +
                 '}';
     }
 
@@ -114,10 +113,10 @@ public final class ContactDate {
         return this;
     }
 
-    public ContactDate withGroup(String groups) {
-        this.group = group;
+     public ContactDate withGroup(String groups) {
+         this.group = group;
         return this;
-    }
+     }
 
     public ContactDate withMobilePhone(String mobilePhone) {
         this.mobilePhone = mobilePhone;
@@ -175,9 +174,9 @@ public final class ContactDate {
         return email;
     }
 
-    public String group() {
-        return group;
-    }
+    //  public String group() {
+    //     return group;
+    // }
 
     public String getAllAddress() {
         return allAddress;
@@ -223,9 +222,9 @@ public final class ContactDate {
         return email;
     }
 
-    public String getGroup() {
-        return group;
-   }
+      public String getGroup() {
+         return group;
+     }
 
     @Override
     public boolean equals(Object o) {
@@ -244,5 +243,10 @@ public final class ContactDate {
             return null;
         }
         return new File(photo);
+    }
+
+    public ContactDate inGroup(GroupDate group) {
+        groups.add(group);
+        return this;
     }
 }
